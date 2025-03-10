@@ -1,0 +1,148 @@
+-- Create the GUI 
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "AutoBlockGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.ResetOnSpawn = false  -- Ensure the GUI doesn't reset on player respawn
+
+-- Create the main frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 250, 0, 180)
+mainFrame.Position = UDim2.new(0, -260, 0.5, -90)
+mainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 50) -- Azul oscuro
+mainFrame.BorderSizePixel = 0
+mainFrame.BackgroundTransparency = 1
+mainFrame.Parent = screenGui
+
+-- Add UI Corner for rounded edges
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 15)
+uiCorner.Parent = mainFrame
+
+-- Add UI Gradient for a modern look
+local uiGradient = Instance.new("UIGradient")
+uiGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 144, 255)), -- Azul eléctrico
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 139))  -- Azul marino
+}
+uiGradient.Rotation = 45
+uiGradient.Parent = mainFrame
+
+-- Add a title to the frame
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, -20, 0, 30)
+titleLabel.Position = UDim2.new(0, 10, 0, 10)
+titleLabel.Text = "Auto Block"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextScaled = true
+titleLabel.BackgroundTransparency = 1
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.Parent = mainFrame
+
+-- Create the Enable/Disable button
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0.8, -10, 0.2, -10)
+toggleButton.Position = UDim2.new(0.1, 5, 0.35, 5)
+toggleButton.Text = "Enable"
+toggleButton.BackgroundColor3 = Color3.fromRGB(0, 50, 150) -- Azul oscuro
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.BorderSizePixel = 0
+toggleButton.Font = Enum.Font.GothamBold
+toggleButton.TextScaled = true
+toggleButton.Parent = mainFrame
+
+-- Add UI Corner to toggle button
+local toggleButtonUICorner = Instance.new("UICorner")
+toggleButtonUICorner.CornerRadius = UDim.new(0, 10)
+toggleButtonUICorner.Parent = toggleButton
+
+-- Create the AIMBOT button
+local aimbotButton = Instance.new("TextButton")
+aimbotButton.Size = UDim2.new(0.8, -10, 0.2, -10)
+aimbotButton.Position = UDim2.new(0.1, 5, 0.6, 5)
+aimbotButton.Text = "AIMBOT"
+aimbotButton.BackgroundColor3 = Color3.fromRGB(0, 200, 255) -- Azul neón
+aimbotButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+aimbotButton.BorderSizePixel = 0
+aimbotButton.Font = Enum.Font.GothamBold
+aimbotButton.TextScaled = true
+aimbotButton.Parent = mainFrame
+
+-- Add UI Corner to AIMBOT button
+local aimbotButtonUICorner = Instance.new("UICorner")
+aimbotButtonUICorner.CornerRadius = UDim.new(0, 10)
+aimbotButtonUICorner.Parent = aimbotButton
+
+-- Create a footer label
+local footerLabel = Instance.new("TextLabel")
+footerLabel.Size = UDim2.new(1, -20, 0, 30)
+footerLabel.Position = UDim2.new(0, 10, 1, -40)
+footerLabel.Text = "Hecho por Tio"
+footerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+footerLabel.TextScaled = true
+footerLabel.BackgroundTransparency = 1
+footerLabel.Font = Enum.Font.GothamBold
+footerLabel.Parent = mainFrame
+
+-- Boolean to track if auto-block is enabled
+local autoBlockEnabled = false
+
+-- Function to toggle auto-block
+local function toggleAutoBlock()
+    autoBlockEnabled = not autoBlockEnabled
+    if autoBlockEnabled then
+        toggleButton.Text = "Disable"
+        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 150, 255) -- Azul claro
+    else
+        toggleButton.Text = "Enable"
+        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 50, 150) -- Azul oscuro
+    end
+end
+
+-- Function to run the AIMBOT script
+local function runAimbot()
+    loadstring(game:HttpGet("https://pastefy.app/cfMW31sf/raw"))()
+end
+
+-- Function to animate the GUI
+local function animateGui()
+    mainFrame.Size = UDim2.new(0, 0, 0, 0)
+    mainFrame.BackgroundTransparency = 1 
+    mainFrame:TweenSize(
+        UDim2.new(0, 250, 0, 180),  
+        Enum.EasingDirection.Out,
+        Enum.EasingStyle.Quad,
+        0.5,  
+        true
+    )
+    mainFrame:TweenPosition(
+        UDim2.new(0, 10, 0.5, -90),  
+        Enum.EasingDirection.Out,
+        Enum.EasingStyle.Quad,
+        0.5,  
+        true
+    )
+    wait(0.1)  
+    mainFrame:TweenSizeAndPosition(
+        UDim2.new(0, 250, 0, 180),
+        UDim2.new(0, 10, 0.5, -90),
+        Enum.EasingDirection.Out,
+        Enum.EasingStyle.Quad,
+        0.4,
+        true
+    )
+    mainFrame.BackgroundTransparency = 0
+end
+
+-- Send initial notification
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "Made by TioHelmoso"; 
+    Text = "If you have any issues, join Discord and contact staff";
+    Duration = 5;
+})
+
+-- Connect buttons to their functions
+toggleButton.MouseButton1Click:Connect(toggleAutoBlock)
+aimbotButton.MouseButton1Click:Connect(runAimbot)
+
+-- Animate the GUI when script is executed
+animateGui()
